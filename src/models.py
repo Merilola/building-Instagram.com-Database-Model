@@ -6,6 +6,41 @@ from sqlalchemy import create_engine
 from eralchemy2 import render_er
 
 Base = declarative_base()
+class User(Base):
+    __tablename__ = 'User'
+    id = Column(Integer, primary_key=True)
+    username = Column(String())
+    fisrtname = Column(String())
+    lastname = Column(String())
+    email = Column(String())
+
+class Comment(Base):
+    __tablename__ = 'Comment'
+    id = Column(Integer, primary_key=True)
+    comment_text = Column(String())
+    author_id = Column(Integer, ForeignKey("User.id"))
+    post_id = Column(Integer, ForeignKey("Post.id"))
+
+class Media(Base):
+    __tablename__ = 'Media'
+    id = Column(Integer, primary_key=True)
+    type = Column(Integer)
+    url = Column(String())
+    post_id = Column(Integer, ForeignKey("Post.id"))
+
+class Post(Base):
+    __tablename__ = 'Post'
+    id =  Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("User.id"))
+
+
+class Followers(Base):
+    __tablename__ = 'Followers'
+    id = Column(Integer, primary_key=True)
+    user_from_id = Column(Integer, ForeignKey("User.id"))
+    user_to_id = Column(Integer, ForeignKey("User.id"))
+
+
 
 class Person(Base):
     __tablename__ = 'person'
